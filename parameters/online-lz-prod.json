@@ -1,0 +1,13 @@
+{
+  "labName": "lz",
+  "environment": "prod",
+  "location": "FranceCentral",
+  "billingScope": "platform",
+  "managementGroupName": "online",
+  "managementGroupHierarchy": "prod",
+  "budget": "1",
+  "subscriptionId": "",
+  "githubRepoName": "msdn",
+  "ownerEmail": "foo@gazelle.cloud",
+  "engineer": "bar@gazelle.cloud"
+}
