@@ -48,7 +48,6 @@ body:
       description:
       options: 
         - platform
-        - test
       default: 0
     validations:
       required: false
