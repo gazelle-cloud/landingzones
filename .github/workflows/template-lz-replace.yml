@@ -11,6 +11,8 @@ on:
   pull_request_target:
     types:
       - closed
+    paths:
+      - 'parameters/replaceMe-lz-landingzoneName.json'
 
 permissions:
   id-token: write
