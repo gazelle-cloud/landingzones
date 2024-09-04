@@ -1,0 +1,24 @@
+
+name: lz - platform-management-prod
+
+on:
+  push:
+    paths:
+      - 'parameters/platform-management-prod.json'
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  landingzone:
+    uses: gazelle-cloud/azurePlatform/.github/workflows/template-Landingzone.yml@main
+    with:
+      managementGroupName : platform
+      managementGroupHierarchy: prod
+      location: FranceCentral
+      parameterFile: ./parameters/platform-management-prod.json
+      mainBicep: ./azurePlatform/Landingzone/bicep/main.bicep
+    secrets: inherit
