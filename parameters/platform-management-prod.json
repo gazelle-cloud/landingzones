@@ -1,0 +1,13 @@
+{
+  "labName": "management",
+  "environment": "prod",
+  "location": "FranceCentral",
+  "billingScope": "platform",
+  "managementGroupName": "platform",
+  "managementGroupHierarchy": "prod",
+  "budget": "10",
+  "subscriptionId": "ca29cb06-f5f6-4116-9061-493426c4d70e",
+  "githubRepoName": "azurePlatform",
+  "ownerEmail": "foo@gazelle.cloud",
+  "engineer": "bar@gazelle.cloud"
+}
