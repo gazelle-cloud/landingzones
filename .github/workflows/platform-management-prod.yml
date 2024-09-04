@@ -1,10 +1,10 @@
 
-name: lz - platform-management-test
+name: lz - platform-management-prod
 
 on:
   push:
     paths:
-      - 'parameters/platform-management-test.json'
+      - 'parameters/platform-management-prod.json'
 
   workflow_dispatch:
 
@@ -23,8 +23,8 @@ jobs:
     uses: gazelle-cloud/azurePlatform/.github/workflows/template-Landingzone.yml@main
     with:
       managementGroupName : platform
-      managementGroupHierarchy: test
+      managementGroupHierarchy: prod
       location: FranceCentral
-      parameterFile: ./parameters/platform-management-test.json
+      parameterFile: ./parameters/platform-management-prod.json
       mainBicep: ./azurePlatform/Landingzone/bicep/main.bicep
     secrets: inherit
