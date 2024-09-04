@@ -61,13 +61,6 @@ jobs:
           find: "replaceMe-lz-landingzoneName"
           replace: "${{ env.landingzoneName }}"
           exclude: "**/template-*"
-
-      - name: replace - location
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          find: "replaceMe-lz-location"
-          replace: "${{ env.landingzoneLocation }}"
-          exclude: "**/template-*"
           
       - name: replace - managementGroupName
         uses: jacobtomlinson/gha-find-replace@v3

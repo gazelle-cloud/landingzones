@@ -26,7 +26,6 @@ jobs:
     with:
       managementGroupName : platform
       managementGroupHierarchy: test
-      location: FranceCentral
       parameterFile: ./parameters/platform-management-test.json
       mainBicep: ./azurePlatform/Landingzone/bicep/main.bicep
     secrets: inherit

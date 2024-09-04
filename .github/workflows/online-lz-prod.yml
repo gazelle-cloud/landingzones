@@ -26,7 +26,6 @@ jobs:
     with:
       managementGroupName : online
       managementGroupHierarchy: prod
-      location: FranceCentral
       parameterFile: ./parameters/online-lz-prod.json
       mainBicep: ./azurePlatform/Landingzone/bicep/main.bicep
     secrets: inherit
