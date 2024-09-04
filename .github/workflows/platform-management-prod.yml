@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   landingzone:
-    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || 
+    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
          github.event.pull_request.merged == true
     uses: gazelle-cloud/azurePlatform/.github/workflows/template-Landingzone.yml@main
     with:
