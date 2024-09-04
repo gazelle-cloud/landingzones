@@ -11,6 +11,8 @@ on:
   pull_request_target:
     types:
       - closed
+    paths:
+      - 'parameters/platform-management-test.json'
 
 permissions:
   id-token: write

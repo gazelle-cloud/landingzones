@@ -8,12 +8,20 @@ on:
 
   workflow_dispatch:
 
+  pull_request_target:
+    types:
+      - closed
+    paths:
+      - 'parameters/online-lz-prod.json'
+
 permissions:
   id-token: write
   contents: read
 
 jobs:
   landingzone:
+    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+         github.event.pull_request.merged == true
     uses: gazelle-cloud/azurePlatform/.github/workflows/template-Landingzone.yml@main
     with:
       managementGroupName : online

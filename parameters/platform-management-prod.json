@@ -6,7 +6,7 @@
   "managementGroupName": "platform",
   "managementGroupHierarchy": "prod",
   "budget": "10",
-  "subscriptionId": "ca29cb06-f5f6-4116-9061-493426c4d70e",
+  "subscriptionId": "bdd77d0d-c645-4fd2-90cd-145680394807",
   "githubRepoName": "azurePlatform",
   "ownerEmail": "foo@gazelle.cloud",
   "engineer": "bar@gazelle.cloud"
