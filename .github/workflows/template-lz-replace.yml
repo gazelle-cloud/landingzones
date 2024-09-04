@@ -26,7 +26,6 @@ jobs:
     with:
       managementGroupName : replaceMe-lz-managementGroupName
       managementGroupHierarchy: replaceMe-lz-managementGroupHierarchy
-      location: replaceMe-lz-location
       parameterFile: ./parameters/replaceMe-lz-landingzoneName.json
       mainBicep: ./azurePlatform/Landingzone/bicep/main.bicep
     secrets: inherit
