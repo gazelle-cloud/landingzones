@@ -38,7 +38,7 @@ jobs:
       run: |
         gh workflow list
 
-        ids=$(gh workflow list --json id,name --jq '[.[] | select(.name | contains("lz - platform")) | .id]')
+        ids=$(gh workflow list --json id,name --jq '[.[] | select(.name | contains("run")) | .id]')
 
         ids_array=($(echo $ids | jq -r '.[]'))
 
