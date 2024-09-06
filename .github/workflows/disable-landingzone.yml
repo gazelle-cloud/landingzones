@@ -54,7 +54,7 @@ jobs:
       uses: azure/cli@v2
       with:
         inlineScript: |
-            # az account subscription cancel --subscription-id ${{ inputs.landingzoneId }} --yes
+            az rest --method POST --url 'https://management.azure.com/subscriptions/${{ inputs.landingzoneId }}/providers/Microsoft.Subscription/cancel?api-version=2024-08-01-preview'
 
     - name: disable landingzone workflow
       if: ${{ inputs.activate == false }}
