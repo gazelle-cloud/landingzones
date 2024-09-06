@@ -1,0 +1,56 @@
+name: Disable Landing Zone
+
+on:
+  workflow_dispatch:
+    inputs:
+      landingzoneId:
+        required: true
+        type: string
+        description: 'Id of the landing zone to disable'
+
+permissions:
+  id-token: write
+  contents: read
+  
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+    environment:  prod
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: get github token
+      id: github-token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ vars.APP_GITHUB_BIGBANG_ID }}
+        private-key: ${{ secrets.APP_GITHUB_BIGBANG }}
+        owner: ${{ github.repository_owner }}
+
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ vars.AZURE_PLATFORM_CLIENT_ID }}
+        tenant-id: ${{ vars.AZURE_TENANT_ID}}
+        allow-no-subscriptions: true
+        enable-AzPSSession: false
+
+    - name: fetch landing zone name
+      uses: azure/cli@v2
+      with:
+        inlineScript: |
+            lzName=$(az account subscription show --id ${{ inputs.landingzoneId }} -query 'displayName' -o tsv)
+            echo "LandingZoneName=$(lzName)" >> $GITHUB_ENV
+   
+    - name: fetch landing zone name
+      uses: azure/cli@v2
+      with:
+        inlineScript: |
+            az account subscription cancel --subscription-id ${{ inputs.landingzoneId }}
+
+    - name: set env variables - landingzones
+      env:
+        GH_TOKEN: ${{ steps.github-token.outputs.token }}
+      run: |
+        gh worflow list
