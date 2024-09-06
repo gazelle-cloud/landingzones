@@ -41,17 +41,18 @@ jobs:
       with:
         inlineScript: |
             lzName=$(az account subscription show --id ${{ inputs.landingzoneId }} --query 'displayName' -o tsv)
-            echo "LandingZoneName=$(lzName)" >> $GITHUB_ENV
+            echo "LandingZoneName=$lzName" >> $GITHUB_ENV
+
    
     - name: cancel landing zone
       uses: azure/cli@v2
       with:
         inlineScript: |
             # az account subscription cancel --subscription-id ${{ inputs.landingzoneId }}
-            echo $LandingZoneName
+            echo ${{ env.LandingZoneName }}
 
     - name: set env variables - landingzones
       env:
         GH_TOKEN: ${{ steps.github-token.outputs.token }}
       run: |
-        gh worflow list
+        gh workflow list
