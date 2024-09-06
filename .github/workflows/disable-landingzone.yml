@@ -1,4 +1,4 @@
-name: Disable Landing Zone
+name: Disable /Reactivce Landing Zone
 
 on:
   workflow_dispatch:
@@ -7,6 +7,11 @@ on:
         required: true
         type: string
         description: 'Id of the landing zone to disable'
+      activate:
+        required: true
+        type: boolean
+        description: 'Activate disabled landing zone?'
+        default: false
 
 permissions:
   id-token: write
@@ -45,14 +50,29 @@ jobs:
 
    
     - name: cancel landing zone
+      if: ${{ inputs.activate == false }}
       uses: azure/cli@v2
       with:
         inlineScript: |
-            # az account subscription cancel --subscription-id ${{ inputs.landingzoneId }}
-            echo ${{ env.LandingZoneName }}
+            az account subscription cancel --subscription-id ${{ inputs.landingzoneId }} --yes
 
-    - name: set env variables - landingzones
+    - name: disable landingzone workflow
+      if: ${{ inputs.activate == false }}
       env:
         GH_TOKEN: ${{ steps.github-token.outputs.token }}
       run: |
         gh workflow disable 'lz - ${{ env.LandingZoneName }}'
+
+    - name: reactivate landing zone
+      if: ${{ inputs.activate == true }}
+      uses: azure/cli@v2
+      with:
+        inlineScript: |
+            az account subscription enable --subscription-id ${{ inputs.landingzoneId }}
+
+    - name: enable landingzone workflow
+      if: ${{ inputs.activate == true }}
+      env:
+        GH_TOKEN: ${{ steps.github-token.outputs.token }}
+      run: |
+        gh workflow enable 'lz - ${{ env.LandingZoneName }}'
