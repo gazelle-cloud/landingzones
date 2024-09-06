@@ -13,7 +13,7 @@ permissions:
   contents: read
   
 jobs:
-  destroy:
+  cancelLandingZone:
     runs-on: ubuntu-latest
     environment:  prod
     steps:
@@ -40,7 +40,7 @@ jobs:
       uses: azure/cli@v2
       with:
         inlineScript: |
-            lzName=$(az account subscription show --id ${{ inputs.landingzoneId }} -query 'displayName' -o tsv)
+            lzName=$(az account subscription show --id ${{ inputs.landingzoneId }} --query 'displayName' -o tsv)
             echo "LandingZoneName=$(lzName)" >> $GITHUB_ENV
    
     - name: fetch landing zone name
