@@ -1,4 +1,4 @@
-name: Disable / Enable Landing Zone
+name: Cancel Landing Zone
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
       landingzoneId:
         required: true
         type: string
-        description: 'Id of the landing zone to disable'
+        description: 'Id of the landing zone to cancel'
 
 permissions:
   id-token: write
