@@ -1,4 +1,4 @@
-name: Disable /Reactivce Landing Zone
+name: Disable / Enable Landing Zone
 
 on:
   workflow_dispatch:
@@ -54,8 +54,7 @@ jobs:
       uses: azure/cli@v2
       with:
         inlineScript: |
-            # az account subscription cancel --subscription-id ${{ inputs.landingzoneId }} --yes
-            echo "LandingZone ${{ env.LandingZoneName }} has been disabled"
+            az account subscription cancel --subscription-id ${{ inputs.landingzoneId }} --yes
 
     - name: disable landingzone workflow
       if: ${{ inputs.activate == false }}
