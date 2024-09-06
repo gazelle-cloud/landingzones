@@ -36,12 +36,12 @@ jobs:
       env:
         GH_TOKEN: ${{ steps.github-token.outputs.token }}
       run: |
-        ids=$(gh workflow list --json id,name --jq '[.[] | select(.name | startswith("lz - platform")) | .id]')
+        ids=$(gh workflow list --json id,name --jq '[.[] | select(.name | startswith("lz")) | .id]')
 
         ids_array=($(echo $ids | jq -r '.[]'))
 
-        for id in "${ids_array[@]}"; do
-          gh workflow run "$id"
-        done
+        # for id in "${ids_array[@]}"; do
+        #   gh workflow run "$id"
+        # done
 
         gh workflow disable 'lz - ${{ env.LandingZoneName }}'
