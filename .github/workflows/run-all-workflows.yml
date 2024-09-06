@@ -3,7 +3,7 @@ name: run all workflows
 on:
   workflow_dispatch:
     inputs:
-      landingzoneId:
+      landingzones:
         required: true
         default: 'lz - platform'
         type: choice
@@ -36,7 +36,7 @@ jobs:
       env:
         GH_TOKEN: ${{ steps.github-token.outputs.token }}
       run: |
-        ids=$(gh workflow list --json id,name --jq '[.[] | select(.name | startswith("lz - platform")) | .id]')
+        ids=$(gh workflow list --json id,name --jq '[.[] | select(.name | startswith(${{ inputs.landingzones }})) | .id]')
 
         echo $ids
 
