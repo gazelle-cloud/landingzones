@@ -1,4 +1,4 @@
-name: run all workflows
+name: utils - run all workflows
 
 on:
   workflow_dispatch:
