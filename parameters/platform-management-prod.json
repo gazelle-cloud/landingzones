@@ -1,7 +1,6 @@
 {
   "labName": "management",
   "environment": "prod",
-  "location": "FranceCentral",
   "billingScope": "platform",
   "managementGroupName": "platform",
   "managementGroupHierarchy": "prod",

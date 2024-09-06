@@ -1,7 +1,6 @@
 {
   "labName": "lz",
   "environment": "prod",
-  "location": "FranceCentral",
   "billingScope": "platform",
   "managementGroupName": "online",
   "managementGroupHierarchy": "prod",
