@@ -55,4 +55,4 @@ jobs:
       env:
         GH_TOKEN: ${{ steps.github-token.outputs.token }}
       run: |
-        gh workflow list
+        gh workflow disable 'lz - ${{ env.LandingZoneName }}'
