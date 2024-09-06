@@ -1,0 +1,47 @@
+name: run all workflows
+
+on:
+  workflow_dispatch:
+    inputs:
+      landingzoneId:
+        required: true
+        default: 'lz - platform'
+        type: choice
+        options:
+          - 'lz - platform'
+          - 'lz - online'
+          - 'lz - playground'
+
+permissions:
+  id-token: write
+  contents: read
+  
+jobs:
+  run-all-workflows:
+    runs-on: ubuntu-latest
+    environment:  prod
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: get github token
+      id: github-token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ vars.APP_GITHUB_BIGBANG_ID }}
+        private-key: ${{ secrets.APP_GITHUB_BIGBANG }}
+        owner: ${{ github.repository_owner }}
+
+    - name: trigger workflows
+      env:
+        GH_TOKEN: ${{ steps.github-token.outputs.token }}
+      run: |
+        ids=$(gh workflow list --json id,name --jq '[.[] | select(.name | startswith("lz - platform")) | .id]')
+
+        ids_array=($(echo $ids | jq -r '.[]'))
+
+        for id in "${ids_array[@]}"; do
+          gh workflow run "$id"
+        done
+
+        gh workflow disable 'lz - ${{ env.LandingZoneName }}'
