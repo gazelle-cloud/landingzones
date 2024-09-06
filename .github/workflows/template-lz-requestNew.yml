@@ -39,7 +39,6 @@ jobs:
 
           Write-Output $issueAsJsonIndented
 
-          $location = $issue.location
           $mgmtGroupName = $issue.managementGroupName
           $mgmtGroupHierarchy = $issue.managementGroupHierarchy
 

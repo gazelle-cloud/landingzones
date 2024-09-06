@@ -1,0 +1,16 @@
+name: cancel landingzone
+description: cancel a landingzone
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill out the form below to create a new landingzone.
+
+  - type: input
+    id: subscriptionId
+    attributes:
+      label: subscription Id
+      description: 
+      placeholder: cool-azure-project
+    validations:
+      required: true

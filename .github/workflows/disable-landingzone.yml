@@ -1,12 +1,15 @@
 name: Cancel Landing Zone
 
 on:
-  workflow_dispatch:
-    inputs:
-      landingzoneId:
-        required: true
-        type: string
-        description: 'Id of the landing zone to cancel'
+  issues:
+    types: closed
+
+  # workflow_dispatch:
+  #   inputs:
+  #     landingzoneId:
+  #       required: true
+  #       type: string
+  #       description: 'Id of the landing zone to cancel'
 
 permissions:
   id-token: write
@@ -14,6 +17,7 @@ permissions:
   
 jobs:
   cancelLandingZone:
+    if: contains(github.event.issue.labels.*.name, 'cancelLandingzone')
     runs-on: ubuntu-latest
     environment:  prod
     steps:
@@ -28,6 +32,26 @@ jobs:
         private-key: ${{ secrets.APP_GITHUB_BIGBANG }}
         owner: ${{ github.repository_owner }}
 
+
+    - name: get issue inputs
+      id: inputs
+      uses: edumserrano/github-issue-forms-parser@v1
+      with:
+        template-filepath: '.github/ISSUE_TEMPLATE/cancel-landingzone.yml'
+        issue-form-body: '${{ github.event.issue.body }}'
+   
+    - name: Output parsed issue
+      id: json
+      shell: pwsh
+      run: |
+        ls 
+        $issue = '${{ steps.inputs.outputs.parsed-issue }}' | ConvertFrom-Json
+        $issueAsJsonIndented = ConvertTo-Json $issue
+
+        $subscriptionId = $issue.subscriptionId
+        write-output "subscriptionId=$subscriptionId" >> $env:GITHUB_ENV
+
+
     - name: Azure login
       uses: azure/login@v2
       with:
@@ -40,7 +64,7 @@ jobs:
       uses: azure/cli@v2
       with:
         inlineScript: |
-            lzName=$(az account subscription show --id ${{ inputs.landingzoneId }} --query 'displayName' -o tsv)
+            lzName=$(az account subscription show --id ${{ env.subscriptionId }} --query 'displayName' -o tsv)
             echo "LandingZoneName=$lzName" >> $GITHUB_ENV
 
    
@@ -48,10 +72,10 @@ jobs:
       uses: azure/cli@v2
       with:
         inlineScript: |
-            az rest --method POST --url 'https://management.azure.com/subscriptions/${{ inputs.landingzoneId }}/providers/Microsoft.Subscription/cancel?IgnoreResourceCheck=true&api-version=2024-08-01-preview'
+            az rest --method POST --url 'https://management.azure.com/subscriptions/${{ env.subscriptionId }}/providers/Microsoft.Subscription/cancel?IgnoreResourceCheck=true&api-version=2024-08-01-preview'
 
     - name: disable landingzone workflow
       env:
         GH_TOKEN: ${{ steps.github-token.outputs.token }}
       run: |
-        gh workflow disable 'lz - ${{ env.LandingZoneName }}'
+        gh workflow disable 'lz - ${{ env.subscriptionId }}'
