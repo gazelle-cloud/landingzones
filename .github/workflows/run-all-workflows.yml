@@ -36,7 +36,7 @@ jobs:
       env:
         GH_TOKEN: ${{ steps.github-token.outputs.token }}
       run: |
-        ids=$(gh workflow list --json id,name --jq '[.[] | select(.name | startswith(${{ inputs.landingzones }})) | .id]')
+        ids=$(gh workflow list --json id,name --jq '[.[] | select(.name | startswith("${{ inputs.landingzones }}")) | .id]')
 
         echo $ids
 
