@@ -48,9 +48,10 @@ jobs:
         $issue = '${{ steps.inputs.outputs.parsed-issue }}' | ConvertFrom-Json
         $issueAsJsonIndented = ConvertTo-Json $issue
 
+        Write-Output $issueAsJsonIndented
+
         $subscriptionId = $issue.subscriptionId
         write-output "subscriptionId=$subscriptionId" >> $env:GITHUB_ENV
-
 
     - name: Azure login
       uses: azure/login@v2
@@ -78,4 +79,4 @@ jobs:
       env:
         GH_TOKEN: ${{ steps.github-token.outputs.token }}
       run: |
-        gh workflow disable 'lz - ${{ env.subscriptionId }}'
+        gh workflow disable 'lz - ${{ env.LandingZoneName }}'
