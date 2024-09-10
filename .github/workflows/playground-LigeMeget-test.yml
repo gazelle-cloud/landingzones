@@ -1,0 +1,31 @@
+
+name: lz - playground-LigeMeget-test
+
+on:
+  push:
+    paths:
+      - 'parameters/playground-LigeMeget-test.json'
+
+  workflow_dispatch:
+
+  pull_request_target:
+    types:
+      - closed
+    paths:
+      - 'parameters/playground-LigeMeget-test.json'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  landingzone:
+    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || 
+         github.event.pull_request.merged == true
+    uses: gazelle-cloud/azurePlatform/.github/workflows/template-Landingzone.yml@main
+    with:
+      managementGroupName : playground
+      managementGroupHierarchy: prod
+      parameterFile: ./parameters/playground-LigeMeget-test.json
+      mainBicep: ./azurePlatform/Landingzone/bicep/main.bicep
+    secrets: inherit
