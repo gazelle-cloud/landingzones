@@ -65,6 +65,7 @@ jobs:
     - name: cancel landing zone
       uses: azure/cli@v2
       with:
+        azcliversion: ${{ vars.AZURE_CLI_VERSION }}
         inlineScript: |
             az rest --method POST --url 'https://management.azure.com/subscriptions/${{ env.subscriptionId }}/providers/Microsoft.Subscription/cancel?IgnoreResourceCheck=true&api-version=2024-08-01-preview'
 
