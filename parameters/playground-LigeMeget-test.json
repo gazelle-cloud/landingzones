@@ -1,0 +1,12 @@
+{
+  "labName": "LigeMeget",
+  "environment": "test",
+  "billingScope": "platform",
+  "managementGroupName": "playground",
+  "managementGroupHierarchy": "prod",
+  "budget": "10",
+  "subscriptionId": "",
+  "githubRepoName": "msdn",
+  "ownerEmail": "foo@gazelle.cloud",
+  "engineer": "bar@gazelle.cloud"
+}
